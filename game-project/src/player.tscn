@@ -1,0 +1,125 @@
+[gd_scene load_steps=12 format=3 uid="uid://cp2msfbugy0ot"]
+
+[ext_resource type="Script" uid="uid://cowyg5oomxiqx" path="res://src/player.gd" id="1_lowyb"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_rc2ur"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lowyb"]
+albedo_color = Color(1, 0.878431, 0.494118, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_gmfve"]
+size = Vector3(1.1, 1.1, 1.1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ehvfd"]
+albedo_color = Color(0.981853, 0.641533, 0.411009, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_lowyb"]
+radius = 0.44
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bktlc"]
+albedo_color = Color(0, 0, 0, 1)
+emission_enabled = true
+emission = Color(0.933333, 0.415686, 0.486275, 1)
+
+[sub_resource type="PrismMesh" id="PrismMesh_lowyb"]
+size = Vector3(1, 1, 0.02)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gmfve"]
+albedo_color = Color(0, 0, 0, 1)
+emission_enabled = true
+emission = Color(1, 0.654902, 0.647059, 1)
+
+[sub_resource type="Gradient" id="Gradient_8pr8v"]
+interpolation_mode = 1
+colors = PackedColorArray(0.45098, 0.27451, 0.298039, 1, 0.933333, 0.415686, 0.486275, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_lowyb"]
+gradient = SubResource("Gradient_8pr8v")
+
+[node name="Player" type="Node3D"]
+script = ExtResource("1_lowyb")
+zoom_meter_active_color = Color(0.933333, 0.415686, 0.486275, 1)
+zoom_meter_inactive_color = Color(0.670588, 0.337255, 0.458824, 1)
+
+[node name="Model" type="Node3D" parent="."]
+
+[node name="Tilt" type="Node3D" parent="Model"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Model/Tilt"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0.723621)
+mesh = SubResource("CylinderMesh_rc2ur")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_lowyb")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Model/Tilt"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -0.276379)
+mesh = SubResource("BoxMesh_gmfve")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_ehvfd")
+
+[node name="Boost" type="Node3D" parent="Model/Tilt"]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0, 1.72743)
+
+[node name="Sphere" type="MeshInstance3D" parent="Model/Tilt/Boost"]
+transform = Transform3D(-0.866025, 2.18557e-08, 0.5, 0.5, 3.78552e-08, 0.866025, 0, 1, -4.37114e-08, 0, 0, -0.131634)
+cast_shadow = 0
+mesh = SubResource("SphereMesh_lowyb")
+surface_material_override/0 = SubResource("StandardMaterial3D_bktlc")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Model/Tilt/Boost"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0.48419)
+cast_shadow = 0
+mesh = SubResource("PrismMesh_lowyb")
+surface_material_override/0 = SubResource("StandardMaterial3D_gmfve")
+
+[node name="MeshInstance3D7" type="MeshInstance3D" parent="Model/Tilt/Boost"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0.48419)
+cast_shadow = 0
+mesh = SubResource("PrismMesh_lowyb")
+surface_material_override/0 = SubResource("StandardMaterial3D_gmfve")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Model/Tilt/Boost"]
+transform = Transform3D(0.866025, 2.18557e-08, 0.5, 0.5, -3.78552e-08, -0.866025, 0, 1, -4.37114e-08, 0, 0, 0.48419)
+cast_shadow = 0
+mesh = SubResource("PrismMesh_lowyb")
+surface_material_override/0 = SubResource("StandardMaterial3D_gmfve")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Model/Tilt/Boost"]
+transform = Transform3D(0.5, 3.78552e-08, 0.866025, 0.866025, -2.18557e-08, -0.5, 0, 1, -4.37114e-08, 0, 0, 0.48419)
+cast_shadow = 0
+mesh = SubResource("PrismMesh_lowyb")
+surface_material_override/0 = SubResource("StandardMaterial3D_gmfve")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Model/Tilt/Boost"]
+transform = Transform3D(0, 4.37114e-08, 1, 1, 0, 7.7647e-23, 0, 1, -4.37114e-08, 0, 0, 0.48419)
+cast_shadow = 0
+mesh = SubResource("PrismMesh_lowyb")
+surface_material_override/0 = SubResource("StandardMaterial3D_gmfve")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="Model/Tilt/Boost"]
+transform = Transform3D(-0.5, 3.78552e-08, 0.866025, 0.866025, 2.18557e-08, 0.5, 0, 1, -4.37114e-08, 0, 0, 0.48419)
+cast_shadow = 0
+mesh = SubResource("PrismMesh_lowyb")
+surface_material_override/0 = SubResource("StandardMaterial3D_gmfve")
+
+[node name="MeshInstance3D8" type="MeshInstance3D" parent="Model/Tilt/Boost"]
+transform = Transform3D(-0.866025, 2.18557e-08, 0.5, 0.5, 3.78552e-08, 0.866025, 0, 1, -4.37114e-08, 0, 0, 0.48419)
+cast_shadow = 0
+mesh = SubResource("PrismMesh_lowyb")
+surface_material_override/0 = SubResource("StandardMaterial3D_gmfve")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Model/Tilt/Boost"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.203263)
+light_energy = 1.2
+omni_range = 11.3703
+omni_attenuation = 1.6
+
+[node name="MeterPos" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.9575, 0)
+
+[node name="Meter" type="Sprite3D" parent="MeterPos"]
+flip_h = true
+billboard = 1
+texture = SubResource("GradientTexture1D_lowyb")
+region_enabled = true
+region_rect = Rect2(0, 0, 256, 64)

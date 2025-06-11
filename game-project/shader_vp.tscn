@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://b5xu63wl2rhts"]
+
+[ext_resource type="Shader" uid="uid://c3tfghvrje2qp" path="res://shader/palettize.gdshader" id="1_p2xk4"]
+[ext_resource type="Texture2D" uid="uid://bg2canxcqp2aw" path="res://assets/pollen8-palette.png" id="2_ly0l8"]
+[ext_resource type="PackedScene" uid="uid://b86lyejv0y128" path="res://test_scene.tscn" id="3_54j18"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_y4gq6"]
+shader = ExtResource("1_p2xk4")
+shader_parameter/shader_enabled = true
+shader_parameter/palette = ExtResource("2_ly0l8")
+shader_parameter/dithering = true
+shader_parameter/dithering_size = 2
+shader_parameter/resolution_scale = 1
+shader_parameter/quantization_level = 8
+
+[node name="ShaderVP" type="SubViewportContainer"]
+material = SubResource("ShaderMaterial_y4gq6")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="."]
+handle_input_locally = false
+size = Vector2i(1920, 1080)
+render_target_update_mode = 4
+
+[node name="Node3D" parent="SubViewport" instance=ExtResource("3_54j18")]
