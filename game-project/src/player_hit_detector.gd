@@ -13,7 +13,10 @@ func _on_area_entered(area: Area3D) -> void:
 		var relative_center: Vector3 = entity.global_position - player.global_position
 		var angle_sign := signf(vel_perpendicular.dot(relative_center))
 		player.residual_velocity = old_vel.rotated(Vector3.UP, angle_sign * (PI/4))
-		player.bounced()
+		var new_perpindicular: Vector3 = player.residual_velocity.cross(Vector3.UP).normalized()
+		var delta_to_ideal: Vector3 = new_perpindicular.dot(relative_center * 0.5) * new_perpindicular.normalized()
+		prints("delta correction:", delta_to_ideal, "magnitude:", delta_to_ideal.length(), "rel center magnitude:", relative_center.length())
+		player.bounced(delta_to_ideal)
 
 		if entity.has_method("esplode"):
 			entity.esplode()

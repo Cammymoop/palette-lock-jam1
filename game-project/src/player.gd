@@ -33,7 +33,14 @@ const BOUNCE_NO_TURN = 0.4
 var no_turn := false
 var bounce_countdown := 0.0
 
+const BOUCE_CORRECTION_TIME = 4/60.0
+var need_bounce_correction := false
+var bounce_correction_vector: Vector3 = Vector3.ZERO
+var bounce_correction_applied: float = 0
+
 func _process(delta: float) -> void:
+	if need_bounce_correction:
+		apply_bounce_correction(delta / BOUCE_CORRECTION_TIME)
 	
 	var active_camera: Camera3D = get_viewport().get_camera_3d()
 
@@ -112,6 +119,16 @@ func _process(delta: float) -> void:
 	if zooming:
 		active_camera.pivot.look_toward = residual_velocity.normalized()
 
+func apply_bounce_correction(amt: float) -> void:
+	amt = minf(amt, 1 - bounce_correction_applied)
+	var correction_vec := bounce_correction_vector * amt
+	global_position += correction_vec
+	bounce_correction_applied += amt
+	if bounce_correction_applied >= 1.0:
+		need_bounce_correction = false
+		bounce_correction_applied = 0
+
+
 func update_zoom_meter() -> void:
 	var grad: GradientTexture1D = zoom_meter.texture
 	var norm_charge := clampf(zoom_charge, 0.0, 1.0)
@@ -131,6 +148,17 @@ func deactivate_zoom() -> void:
 	model_tilt.basis = Basis.IDENTITY
 	zoom_charge = 0.0
 
-func bounced() -> void:
+func bounced(new_bounce_correction: Vector3) -> void:
+	if need_bounce_correction:
+		# add all the lingering bounce correction at once
+		apply_bounce_correction(1.0)
+
 	no_turn = true
 	bounce_countdown = BOUNCE_NO_TURN
+	if zooming and new_bounce_correction.length_squared() > 0.0:
+		set_bounce_correction(new_bounce_correction)
+
+func set_bounce_correction(new_bounce_correction: Vector3) -> void:
+	need_bounce_correction = true
+	bounce_correction_vector = new_bounce_correction
+	bounce_correction_applied = 0

@@ -3,7 +3,7 @@ extends Node3D
 @export var does_revive: bool = false
 @export var revive_time: float = 1.4
 
-@export var agro_range: float = 10.0
+@export var agro_range: float = 70.0
 
 @export var look_factor: float = 3.0
 
