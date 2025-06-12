@@ -36,7 +36,9 @@ func esplode() -> void:
 
 func die() -> void:
 	alive = false
-	$Model.visible = false
+	for child in $Model.get_children():
+		child.visible = false
+	$Model/Explosion.visible = true
 	$Hurtbox.get_child(0).set_deferred("disabled", true)
 
 func revive() -> void:
@@ -45,6 +47,8 @@ func revive() -> void:
 	$Hurtbox.get_child(0).disabled = false
 
 func _process(delta: float) -> void:
+	if not alive:
+		$Model.visible = false
 	
 	if target:
 		if target.global_position.distance_to(global_position) > agro_range * 2:

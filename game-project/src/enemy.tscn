@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dr7fjj8pe2x11"]
+[gd_scene load_steps=10 format=3 uid="uid://dr7fjj8pe2x11"]
 
 [ext_resource type="Script" uid="uid://31dfhshj2gk2" path="res://src/test_enemy.gd" id="1_7k104"]
 
@@ -15,6 +15,17 @@ size = Vector3(0.25, 0.25, 0.25)
 albedo_color = Color(0, 0, 0, 1)
 emission_enabled = true
 emission = Color(1, 0.905882, 0.839216, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_gum6w"]
+size = Vector2(2, 2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u7g3q"]
+shading_mode = 0
+billboard_mode = 1
+
+[sub_resource type="SphereMesh" id="SphereMesh_c1w3u"]
+radius = 1.1
+height = 2.2
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_7xaro"]
 radius = 1.30405
@@ -39,6 +50,17 @@ surface_material_override/0 = SubResource("StandardMaterial3D_qi2p4")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.202, -0.157, -0.508)
 mesh = SubResource("BoxMesh_4gyqm")
 surface_material_override/0 = SubResource("StandardMaterial3D_qi2p4")
+
+[node name="Explosion" type="Node3D" parent="Model"]
+visible = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Model/Explosion"]
+mesh = SubResource("QuadMesh_gum6w")
+surface_material_override/0 = SubResource("StandardMaterial3D_u7g3q")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Model/Explosion"]
+mesh = SubResource("SphereMesh_c1w3u")
+surface_material_override/0 = SubResource("StandardMaterial3D_u7g3q")
 
 [node name="Hurtbox" type="Area3D" parent="."]
 collision_layer = 2
