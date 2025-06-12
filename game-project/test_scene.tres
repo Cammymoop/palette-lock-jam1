@@ -218,7 +218,6 @@ operator = 4
 input_name = "vertex"
 
 [sub_resource type="VisualShaderNodeFloatOp" id="VisualShaderNodeFloatOp_hwly8"]
-output_port_for_preview = 0
 
 [sub_resource type="Gradient" id="Gradient_mad0d"]
 
@@ -439,7 +438,6 @@ operator = 2
 constant = 1.0
 
 [sub_resource type="VisualShaderNodeFloatOp" id="VisualShaderNodeFloatOp_gl586"]
-output_port_for_preview = 0
 operator = 1
 
 [sub_resource type="VisualShaderNodeFloatOp" id="VisualShaderNodeFloatOp_mad0d"]
@@ -1034,7 +1032,7 @@ void fragment() {
 
 }
 "
-graph_offset = Vector2(-281.641, 52.0589)
+graph_offset = Vector2(-1158.04, -411.633)
 nodes/fragment/0/position = Vector2(1440, 600)
 nodes/fragment/2/node = SubResource("VisualShaderNodeInput_3kfkg")
 nodes/fragment/2/position = Vector2(-4860, 60)
@@ -1229,7 +1227,7 @@ nodes/fragment/125/position = Vector2(-100, 1540)
 nodes/fragment/129/node = SubResource("VisualShaderNodeStep_hrqc2")
 nodes/fragment/129/position = Vector2(300, 2020)
 nodes/fragment/130/node = SubResource("VisualShaderNodeGlobalExpression_thrxi")
-nodes/fragment/130/position = Vector2(-2280, 2440)
+nodes/fragment/130/position = Vector2(-3320, 1680)
 nodes/fragment/130/size = Vector2(1080, 660)
 nodes/fragment/130/input_ports = ""
 nodes/fragment/130/output_ports = ""

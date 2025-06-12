@@ -1,6 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://cp2msfbugy0ot"]
+[gd_scene load_steps=14 format=3 uid="uid://cp2msfbugy0ot"]
 
 [ext_resource type="Script" uid="uid://cowyg5oomxiqx" path="res://src/player.gd" id="1_lowyb"]
+[ext_resource type="Script" uid="uid://bodlux840q1yp" path="res://src/player_hit_detector.gd" id="2_gmfve"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_rc2ur"]
 
@@ -36,8 +37,12 @@ colors = PackedColorArray(0.45098, 0.27451, 0.298039, 1, 0.933333, 0.415686, 0.4
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_lowyb"]
 gradient = SubResource("Gradient_8pr8v")
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_lowyb"]
+size = Vector3(1, 0.935059, 2.37476)
+
 [node name="Player" type="Node3D"]
 script = ExtResource("1_lowyb")
+zoom_turning_factor = 0.25
 zoom_meter_active_color = Color(0.933333, 0.415686, 0.486275, 1)
 zoom_meter_inactive_color = Color(0.670588, 0.337255, 0.458824, 1)
 
@@ -123,3 +128,13 @@ billboard = 1
 texture = SubResource("GradientTexture1D_lowyb")
 region_enabled = true
 region_rect = Rect2(0, 0, 256, 64)
+
+[node name="HitDetector" type="Area3D" parent="."]
+collision_mask = 15
+script = ExtResource("2_gmfve")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitDetector"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0324707, 0.272095)
+shape = SubResource("BoxShape3D_lowyb")
+
+[connection signal="area_entered" from="HitDetector" to="HitDetector" method="_on_area_entered"]
