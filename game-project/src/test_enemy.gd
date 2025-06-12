@@ -7,10 +7,18 @@ extends Node3D
 
 @export var look_factor: float = 3.0
 
+var debris_scn: PackedScene = preload("res://src/enemy_debris.tscn")
+var smoke_scn: PackedScene = preload("res://src/enemy_smoke.tscn")
+@export var debris_count: int = 4
+
 var alive: bool = true
+var explosion_frame := false
 
 var target: Node3D
 var checked_for_target_timeout := 0.0
+
+func _ready() -> void:
+	$Model/Explosion.visible = false
 
 func find_target() -> void:
 	target = null
@@ -28,17 +36,25 @@ func find_target() -> void:
 		target = min_player
 
 func esplode() -> void:
-	if not does_revive:
-		queue_free()
-	else:
-		die()
+	$Model/Explosion.visible = true
+	set_deferred("explosion_frame", true)
+	die()
+	if does_revive:
 		get_tree().create_timer(revive_time).timeout.connect(revive)
+	
+	for i in debris_count:
+		var debris: Node3D = debris_scn.instantiate()
+		get_parent().add_child(debris)
+		debris.global_position = global_position
+	
+	for i in debris_count:
+		var smoke: Node3D = smoke_scn.instantiate()
+		get_parent().add_child(smoke)
+		smoke.global_position = global_position + smoke.velocity * 0.3
 
 func die() -> void:
 	alive = false
-	for child in $Model.get_children():
-		child.visible = false
-	$Model/Explosion.visible = true
+	target = null
 	$Hurtbox.get_child(0).set_deferred("disabled", true)
 
 func revive() -> void:
@@ -47,8 +63,13 @@ func revive() -> void:
 	$Hurtbox.get_child(0).disabled = false
 
 func _process(delta: float) -> void:
-	if not alive:
+	if explosion_frame:
+		$Model/Explosion.visible = false
 		$Model.visible = false
+		explosion_frame = false
+
+	if not alive:
+		return
 	
 	if target:
 		if target.global_position.distance_to(global_position) > agro_range * 2:

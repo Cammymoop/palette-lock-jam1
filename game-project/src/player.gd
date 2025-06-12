@@ -9,7 +9,7 @@ extends Node3D
 @export_category("Zoom")
 @export var zoom_speed: float = 32.0
 @export var zoom_alignment_factor: float = 0.90
-@export var zoom_activation_time: float = 4.5
+@export var zoom_activation_time: float = 2.5
 @export var zoom_charge_decay: float = 4.0
 @export var zoom_turning_factor: float = 1.0
 
@@ -40,6 +40,8 @@ var residual_velocity: Vector3 = Vector3.ZERO
 @export var smooth_turning_time: float = 0.15
 @export var smooth_non_zoom_time: float = 0.05
 
+var hit_effect_frame := false
+
 var smoothed_non_zoom_inp_angle := Vector2.UP.angle()
 var smoothed_turning: float = 0.0
 var smoothed_no_input: float = 1.0
@@ -67,6 +69,9 @@ var bounce_correction_applied: float = 0
 func _process(delta: float) -> void:
 	if need_bounce_correction:
 		apply_bounce_correction(delta / BOUCE_CORRECTION_TIME)
+	
+	if hit_effect_frame:
+		hit_effect_frame = false
 	
 	var active_camera: Camera3D = get_viewport().get_camera_3d()
 
@@ -157,6 +162,7 @@ func _process(delta: float) -> void:
 			else:
 				zoom_charge -= zoom_charge_decay * 0.3 * delta
 		direction = Vector3.ZERO
+	zoom_charge = clampf(zoom_charge, 0.0, 1.0)
 	
 	var base_speeding := base_speed_factor * 60.0
 	if zooming:
@@ -252,10 +258,12 @@ func bounced(new_bounce_correction: Vector3) -> void:
 
 	no_turn = true
 	bounce_countdown = BOUNCE_NO_TURN
-	if zooming:
+	if zooming or true:
 		HitFreezer.do_hit_freeze()
 		if new_bounce_correction.length_squared() > 0.0:
 			set_bounce_correction(new_bounce_correction)
+	
+	hit_effect_frame = true
 
 func set_bounce_correction(new_bounce_correction: Vector3) -> void:
 	need_bounce_correction = true

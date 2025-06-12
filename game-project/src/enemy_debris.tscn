@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://cd4ravlvjfvkc"]
+
+[ext_resource type="Script" uid="uid://dklbqtspvinc2" path="res://src/enemy_debris.gd" id="1_skhut"]
+[ext_resource type="Material" uid="uid://bxh27c8xrtcyc" path="res://assets/enemy_ma.tres" id="2_u0v1a"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_5cggl"]
+orientation = 1
+
+[node name="EnemyDebris" type="Node3D"]
+script = ExtResource("1_skhut")
+tumble_z = 12.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("QuadMesh_5cggl")
+surface_material_override/0 = ExtResource("2_u0v1a")
+
+[node name="BackFace" type="MeshInstance3D" parent="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0)
+mesh = SubResource("QuadMesh_5cggl")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("2_u0v1a")

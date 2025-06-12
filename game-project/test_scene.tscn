@@ -140,7 +140,6 @@ does_revive = true
 
 [node name="Enemy2" parent="EnemySet" instance=ExtResource("8_buypi")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -5.5522, 3, 5.27163)
-does_revive = true
 
 [node name="Enemy3" parent="EnemySet" instance=ExtResource("8_buypi")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -5.2331, 3, 12.7205)
@@ -148,7 +147,6 @@ does_revive = true
 
 [node name="Enemy4" parent="EnemySet" instance=ExtResource("8_buypi")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.398302, 3, 16.9499)
-does_revive = true
 
 [node name="World" type="Node3D" parent="."]
 transform = Transform3D(6, 0, 0, 0, 6, 0, 0, 0, 6, 0, 0, 0)

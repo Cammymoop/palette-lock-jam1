@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://lyej6igcudm"]
+
+[ext_resource type="Script" uid="uid://dklbqtspvinc2" path="res://src/enemy_debris.gd" id="1_m0njd"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_1vmur"]
+radius = 0.3
+height = 0.6
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_skhut"]
+albedo_color = Color(0.868985, 0.868985, 0.868985, 1)
+emission_enabled = true
+emission = Color(0.521141, 0.521141, 0.521141, 1)
+
+[node name="EnemySmoke" type="Node3D"]
+script = ExtResource("1_m0njd")
+upward_velocity = -2.0
+max_spread = 1.571
+min_spread = 1.382
+gravity = 1.089
+scale_out = true
+scale_out_time = 5.0
+scale_out_curve = 4.14106
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+cast_shadow = 0
+mesh = SubResource("SphereMesh_1vmur")
+surface_material_override/0 = SubResource("StandardMaterial3D_skhut")

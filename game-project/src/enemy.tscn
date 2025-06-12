@@ -1,12 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://dr7fjj8pe2x11"]
+[gd_scene load_steps=14 format=3 uid="uid://dr7fjj8pe2x11"]
 
 [ext_resource type="Script" uid="uid://31dfhshj2gk2" path="res://src/test_enemy.gd" id="1_7k104"]
+[ext_resource type="Material" uid="uid://bxh27c8xrtcyc" path="res://assets/enemy_ma.tres" id="2_u7g3q"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_7xaro"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7k104"]
-disable_ambient_light = true
-albedo_color = Color(0.933333, 0.415686, 0.486275, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_4gyqm"]
 size = Vector3(0.25, 0.25, 0.25)
@@ -16,10 +13,34 @@ albedo_color = Color(0, 0, 0, 1)
 emission_enabled = true
 emission = Color(1, 0.905882, 0.839216, 1)
 
+[sub_resource type="QuadMesh" id="QuadMesh_u7g3q"]
+size = Vector2(40, 30)
+
+[sub_resource type="Gradient" id="Gradient_u7g3q"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0.442623, 1)
+colors = PackedColorArray(0, 0, 0, 0.301961, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_c1w3u"]
+gradient = SubResource("Gradient_u7g3q")
+fill = 1
+fill_from = Vector2(0.521505, 0.526882)
+fill_to = Vector2(0.951613, 0.510753)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c1w3u"]
+render_priority = 1
+transparency = 1
+no_depth_test = true
+shading_mode = 0
+albedo_texture = SubResource("GradientTexture2D_c1w3u")
+billboard_mode = 1
+
 [sub_resource type="QuadMesh" id="QuadMesh_gum6w"]
 size = Vector2(2, 2)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u7g3q"]
+render_priority = 1
+no_depth_test = true
 shading_mode = 0
 billboard_mode = 1
 
@@ -39,7 +60,7 @@ script = ExtResource("1_7k104")
 transform = Transform3D(0.709406, 0.00231096, 0.704796, 0.573576, 0.579228, -0.579228, -0.409576, 0.815162, 0.409582, 0, 0, 0)
 mesh = SubResource("BoxMesh_7xaro")
 skeleton = NodePath("../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_7k104")
+surface_material_override/0 = ExtResource("2_u7g3q")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="Model"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.202104, -0.156512, -0.508409)
@@ -52,7 +73,10 @@ mesh = SubResource("BoxMesh_4gyqm")
 surface_material_override/0 = SubResource("StandardMaterial3D_qi2p4")
 
 [node name="Explosion" type="Node3D" parent="Model"]
-visible = false
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Model/Explosion"]
+mesh = SubResource("QuadMesh_u7g3q")
+surface_material_override/0 = SubResource("StandardMaterial3D_c1w3u")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Model/Explosion"]
 mesh = SubResource("QuadMesh_gum6w")
