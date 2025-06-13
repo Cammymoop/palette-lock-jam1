@@ -1,0 +1,117 @@
+[gd_scene load_steps=7 format=3 uid="uid://bdooo0stktrc7"]
+
+[ext_resource type="Script" uid="uid://hew4wqnqsl2f" path="res://src/mesh_alt_color.gd" id="1_2aro6"]
+[ext_resource type="Script" uid="uid://dgahfn4478ruy" path="res://src/enemy_attack_thing.gd" id="1_8uvm5"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_8uvm5"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wiwg6"]
+albedo_color = Color(0, 0, 0, 1)
+emission_enabled = true
+emission = Color(0.933333, 0.415686, 0.486275, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_2aro6"]
+radius = 0.1
+height = 0.2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2aro6"]
+albedo_color = Color(1, 0.654902, 0.647059, 1)
+emission_enabled = true
+emission = Color(1, 0.654902, 0.647059, 1)
+
+[node name="EnemyAttackThing" type="Node3D"]
+script = ExtResource("1_8uvm5")
+spinning = false
+spin_speed = 6.3
+attack_speed = 18.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00534701, 0)
+mesh = SubResource("SphereMesh_8uvm5")
+surface_material_override/0 = SubResource("StandardMaterial3D_wiwg6")
+script = ExtResource("1_2aro6")
+is_emission = true
+
+[node name="LilBits" type="Node3D" parent="."]
+transform = Transform3D(0.425006, 0.905203, 0, -0.905203, 0.425006, 0, 0, 0, 1, -0.0228306, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="LilBits"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, 0.503785, 0, 0)
+mesh = SubResource("SphereMesh_2aro6")
+surface_material_override/0 = SubResource("StandardMaterial3D_2aro6")
+script = ExtResource("1_2aro6")
+is_emission = true
+color1 = Color(1, 0.654902, 0.647059, 1)
+color2 = Color(1, 0.905882, 0.839216, 1)
+
+[node name="MeshInstance3D9" type="MeshInstance3D" parent="LilBits"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, -0.0211114, 0, -0.496299)
+mesh = SubResource("SphereMesh_2aro6")
+surface_material_override/0 = SubResource("StandardMaterial3D_2aro6")
+script = ExtResource("1_2aro6")
+is_emission = true
+color1 = Color(1, 0.654902, 0.647059, 1)
+color2 = Color(1, 0.905882, 0.839216, 1)
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="LilBits"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, -0.504, 0, 0)
+mesh = SubResource("SphereMesh_2aro6")
+surface_material_override/0 = SubResource("StandardMaterial3D_2aro6")
+script = ExtResource("1_2aro6")
+is_emission = true
+color1 = Color(1, 0.654902, 0.647059, 1)
+color2 = Color(1, 0.905882, 0.839216, 1)
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="LilBits"]
+transform = Transform3D(0.707107, -0.707107, 0, 0.683013, 0.683013, -0.258819, 0.183013, 0.183013, 0.965926, 0.356198, 0.344165, 0.0922187)
+mesh = SubResource("SphereMesh_2aro6")
+surface_material_override/0 = SubResource("StandardMaterial3D_2aro6")
+script = ExtResource("1_2aro6")
+is_emission = true
+color1 = Color(1, 0.654902, 0.647059, 1)
+color2 = Color(1, 0.905882, 0.839216, 1)
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="LilBits"]
+transform = Transform3D(0.707107, -0.707107, 0, 0.683013, 0.683013, -0.258819, 0.183013, 0.183013, 0.965926, -0.356413, -0.344165, -0.0922187)
+mesh = SubResource("SphereMesh_2aro6")
+surface_material_override/0 = SubResource("StandardMaterial3D_2aro6")
+script = ExtResource("1_2aro6")
+is_emission = true
+color1 = Color(1, 0.654902, 0.647059, 1)
+color2 = Color(1, 0.905882, 0.839216, 1)
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="LilBits"]
+transform = Transform3D(0, -1, 0, 0.965926, 0, -0.258819, 0.258819, 0, 0.965926, -0.000107735, 0.486723, 0.130417)
+mesh = SubResource("SphereMesh_2aro6")
+surface_material_override/0 = SubResource("StandardMaterial3D_2aro6")
+script = ExtResource("1_2aro6")
+is_emission = true
+color1 = Color(1, 0.654902, 0.647059, 1)
+color2 = Color(1, 0.905882, 0.839216, 1)
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="LilBits"]
+transform = Transform3D(0, -1, 0, 0.965926, 0, -0.258819, 0.258819, 0, 0.965926, -0.000107735, -0.486723, -0.130417)
+mesh = SubResource("SphereMesh_2aro6")
+surface_material_override/0 = SubResource("StandardMaterial3D_2aro6")
+script = ExtResource("1_2aro6")
+is_emission = true
+color1 = Color(1, 0.654902, 0.647059, 1)
+color2 = Color(1, 0.905882, 0.839216, 1)
+
+[node name="MeshInstance3D7" type="MeshInstance3D" parent="LilBits"]
+transform = Transform3D(-0.707107, -0.707107, 0, 0.683013, -0.683013, -0.258819, 0.183013, -0.183013, 0.965926, -0.356413, 0.344165, 0.0922187)
+mesh = SubResource("SphereMesh_2aro6")
+surface_material_override/0 = SubResource("StandardMaterial3D_2aro6")
+script = ExtResource("1_2aro6")
+is_emission = true
+color1 = Color(1, 0.654902, 0.647059, 1)
+color2 = Color(1, 0.905882, 0.839216, 1)
+
+[node name="MeshInstance3D8" type="MeshInstance3D" parent="LilBits"]
+transform = Transform3D(-0.707107, -0.707107, 0, 0.683013, -0.683013, -0.258819, 0.183013, -0.183013, 0.965926, 0.356198, -0.344165, -0.0922187)
+mesh = SubResource("SphereMesh_2aro6")
+surface_material_override/0 = SubResource("StandardMaterial3D_2aro6")
+script = ExtResource("1_2aro6")
+is_emission = true
+color1 = Color(1, 0.654902, 0.647059, 1)
+color2 = Color(1, 0.905882, 0.839216, 1)

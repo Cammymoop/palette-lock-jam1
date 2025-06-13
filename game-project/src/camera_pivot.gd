@@ -16,6 +16,8 @@ const RADIANS_PER_PIXEL_MOVED := 0.005
 @export var mouse_turn_hold_required := true
 @export var capture_on_mouse_turn_hold := true
 @export var cam_turn_factor: float = 6.0
+@export var invert_mouse_turn: bool = false
+@export var invert_mouse_turn_hold: bool = false
 
 @export_category("Zoom")
 @export var zoom_in_distance: float = 6.0
@@ -75,9 +77,11 @@ func handle_mouse_motion_event(event: InputEventMouseMotion) -> void:
 	if mouse_turn_hold_required:
 		do_mouse_turn = Input.is_action_pressed("mouse_turn_hold")
 	
+	var mouse_move_angle_sign := 1.0 if invert_mouse_turn else -1.0
+
 	if do_mouse_turn:
 		var mouse_horiz := event.screen_relative.x
-		var turn_by := mouse_horiz * mouse_turn_factor * RADIANS_PER_PIXEL_MOVED
+		var turn_by := mouse_horiz * mouse_turn_factor * RADIANS_PER_PIXEL_MOVED * mouse_move_angle_sign
 		look_toward = look_toward.rotated(Vector3.UP, turn_by)
 		rotate_y(turn_by)
 
@@ -102,7 +106,8 @@ func _process(delta: float) -> void:
 	if not rotate_locked:
 		if Input.is_action_pressed("turn_cam_left") or Input.is_action_pressed("turn_cam_right"):
 			var strength := Input.get_axis("turn_cam_right", "turn_cam_left")
-			var turn_by := strength * cam_turn_factor * delta
+			var turn_hold_sign := 1.0 if invert_mouse_turn_hold else -1.0
+			var turn_by := strength * cam_turn_factor * delta * turn_hold_sign
 			look_toward = look_toward.rotated(Vector3.UP, turn_by)
 			rotate_y(turn_by * mouse_turn_factor_immediate_factor)
 	

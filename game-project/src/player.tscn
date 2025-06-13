@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cp2msfbugy0ot"]
+[gd_scene load_steps=16 format=3 uid="uid://cp2msfbugy0ot"]
 
 [ext_resource type="Script" uid="uid://cowyg5oomxiqx" path="res://src/player.gd" id="1_lowyb"]
 [ext_resource type="Script" uid="uid://bodlux840q1yp" path="res://src/player_hit_detector.gd" id="2_gmfve"]
@@ -29,6 +29,12 @@ size = Vector3(1, 1, 0.02)
 albedo_color = Color(0, 0, 0, 1)
 emission_enabled = true
 emission = Color(1, 0.654902, 0.647059, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ehvfd"]
+size = Vector3(2, 0.2, 0.2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pg28d"]
+albedo_color = Color(0.447059, 0.862745, 0.733333, 1)
 
 [sub_resource type="Gradient" id="Gradient_8pr8v"]
 interpolation_mode = 1
@@ -118,15 +124,41 @@ light_energy = 1.2
 omni_range = 11.3703
 omni_attenuation = 1.6
 
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Model"]
+transform = Transform3D(-3.2365e-08, -0.642788, 0.766044, -2.71575e-08, 0.766044, 0.642788, -0.966556, -1.71695e-15, -4.37114e-08, 0.537401, -0.0661446, 0.706987)
+mesh = SubResource("BoxMesh_ehvfd")
+skeleton = NodePath("Meter2")
+surface_material_override/0 = SubResource("StandardMaterial3D_pg28d")
+
+[node name="Meter2" type="Sprite3D" parent="Model/MeshInstance3D"]
+transform = Transform3D(1, -3.55271e-15, 7.10543e-15, 1.77636e-15, 1, 8.03337e-23, -1.06581e-14, 0, 1, 0.270174, -2.98023e-08, 0.102903)
+flip_h = true
+texture = SubResource("GradientTexture1D_lowyb")
+region_enabled = true
+region_rect = Rect2(0, 0, 256, 24)
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Model"]
+transform = Transform3D(-5.2134e-08, 0.642787, -0.766044, -2.71575e-08, 0.766044, 0.642787, 0.966556, 5.61943e-08, -2.32584e-08, -0.537, -0.066, 0.707)
+mesh = SubResource("BoxMesh_ehvfd")
+skeleton = NodePath("../MeshInstance3D/Meter2")
+surface_material_override/0 = SubResource("StandardMaterial3D_pg28d")
+
+[node name="Meter3" type="Sprite3D" parent="Model/MeshInstance3D2"]
+transform = Transform3D(1, -1.42109e-14, 5.32907e-15, -7.10543e-15, 1, -2.98023e-08, 1.77636e-15, 2.98023e-08, 1, -0.270362, -0.000221252, 0.102942)
+texture = SubResource("GradientTexture1D_lowyb")
+region_enabled = true
+region_rect = Rect2(0, 0, 256, 24)
+
 [node name="MeterPos" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.9575, 0)
 
 [node name="Meter" type="Sprite3D" parent="MeterPos"]
+visible = false
 flip_h = true
 billboard = 1
 texture = SubResource("GradientTexture1D_lowyb")
 region_enabled = true
-region_rect = Rect2(0, 0, 256, 64)
+region_rect = Rect2(0, 0, 256, 12)
 
 [node name="HitDetector" type="Area3D" parent="."]
 collision_mask = 15

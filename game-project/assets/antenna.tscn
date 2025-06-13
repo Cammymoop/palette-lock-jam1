@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://c4sugeomb76ty"]
+
+[ext_resource type="Material" uid="uid://bxh27c8xrtcyc" path="res://assets/enemy_ma.tres" id="1_6ptiy"]
+[ext_resource type="Script" uid="uid://tp5c3rglhor3" path="res://src/enemy_antenna.gd" id="1_r1twr"]
+[ext_resource type="Script" uid="uid://hew4wqnqsl2f" path="res://src/mesh_alt_color.gd" id="2_r1twr"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_c1w3u"]
+size = Vector3(0.06, 0.7, 0.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_6ptiy"]
+size = Vector3(0.1, 0.2, 0.14)
+
+[node name="Antenna" type="Node3D"]
+script = ExtResource("1_r1twr")
+
+[node name="AntennaMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.999999, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.313224, 0)
+mesh = SubResource("BoxMesh_c1w3u")
+skeleton = NodePath("../../../..")
+surface_material_override/0 = ExtResource("1_6ptiy")
+script = ExtResource("2_r1twr")
+color1 = Color(0.955531, 0.506827, 0.557288, 1)
+color2 = Color(0.561507, 0.929695, 0.809068, 1)
+
+[node name="AntennaMesh2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.999999, 0, 0, 0, 0.978314, -0.207126, 0, 0.207126, 0.978314, 0, 0.718755, 0.0259832)
+mesh = SubResource("BoxMesh_6ptiy")
+skeleton = NodePath("../../../..")
+surface_material_override/0 = ExtResource("1_6ptiy")
+script = ExtResource("2_r1twr")

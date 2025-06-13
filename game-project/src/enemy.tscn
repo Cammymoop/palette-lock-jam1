@@ -1,7 +1,9 @@
-[gd_scene load_steps=14 format=3 uid="uid://dr7fjj8pe2x11"]
+[gd_scene load_steps=17 format=3 uid="uid://dr7fjj8pe2x11"]
 
 [ext_resource type="Script" uid="uid://31dfhshj2gk2" path="res://src/test_enemy.gd" id="1_7k104"]
 [ext_resource type="Material" uid="uid://bxh27c8xrtcyc" path="res://assets/enemy_ma.tres" id="2_u7g3q"]
+[ext_resource type="Script" uid="uid://hew4wqnqsl2f" path="res://src/mesh_alt_color.gd" id="3_c1w3u"]
+[ext_resource type="PackedScene" uid="uid://c4sugeomb76ty" path="res://assets/antenna.tscn" id="4_liqmj"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_7xaro"]
 
@@ -9,6 +11,13 @@
 size = Vector3(0.25, 0.25, 0.25)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qi2p4"]
+resource_local_to_scene = true
+albedo_color = Color(0, 0, 0, 1)
+emission_enabled = true
+emission = Color(1, 0.905882, 0.839216, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_liqmj"]
+resource_local_to_scene = true
 albedo_color = Color(0, 0, 0, 1)
 emission_enabled = true
 emission = Color(1, 0.905882, 0.839216, 1)
@@ -53,26 +62,45 @@ radius = 1.30405
 
 [node name="Enemy" type="Node3D" groups=["Explodable"]]
 script = ExtResource("1_7k104")
+eye_other_color = Color(0.447059, 0.862745, 0.733333, 1)
 
 [node name="Model" type="Node3D" parent="."]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Model"]
+[node name="Body" type="Node3D" parent="Model"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Model/Body"]
 transform = Transform3D(0.709406, 0.00231096, 0.704796, 0.573576, 0.579228, -0.579228, -0.409576, 0.815162, 0.409582, 0, 0, 0)
 mesh = SubResource("BoxMesh_7xaro")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../..")
 surface_material_override/0 = ExtResource("2_u7g3q")
+script = ExtResource("3_c1w3u")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Model"]
+[node name="LeftEye" type="MeshInstance3D" parent="Model/Body"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.202104, -0.156512, -0.508409)
 mesh = SubResource("BoxMesh_4gyqm")
+skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_qi2p4")
 
-[node name="MeshInstance3D3" type="MeshInstance3D" parent="Model"]
+[node name="RightEye" type="MeshInstance3D" parent="Model/Body"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.202, -0.157, -0.508)
 mesh = SubResource("BoxMesh_4gyqm")
-surface_material_override/0 = SubResource("StandardMaterial3D_qi2p4")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_liqmj")
+
+[node name="Antenna" parent="Model/Body" instance=ExtResource("4_liqmj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.242241, 0.267023, -0.31653)
+
+[node name="Antenna3" parent="Model/Body" instance=ExtResource("4_liqmj")]
+transform = Transform3D(0.776981, -0.629524, 0, 0.629524, 0.776981, 0, 0, 0, 1, -0.465479, 0.133969, -0.131444)
+
+[node name="Antenna4" parent="Model/Body" instance=ExtResource("4_liqmj")]
+transform = Transform3D(0.777146, 0.62932, 0, -0.62932, 0.777146, 0, 0, 0, 1, 0.465, 0.134, -0.131)
+
+[node name="Antenna2" parent="Model/Body" instance=ExtResource("4_liqmj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.242, 0.267, -0.317)
 
 [node name="Explosion" type="Node3D" parent="Model"]
+visible = false
 
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="Model/Explosion"]
 mesh = SubResource("QuadMesh_u7g3q")
@@ -85,6 +113,9 @@ surface_material_override/0 = SubResource("StandardMaterial3D_u7g3q")
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="Model/Explosion"]
 mesh = SubResource("SphereMesh_c1w3u")
 surface_material_override/0 = SubResource("StandardMaterial3D_u7g3q")
+
+[node name="ShootFrom" type="Marker3D" parent="Model"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.38447, 0.170408)
 
 [node name="Hurtbox" type="Area3D" parent="."]
 collision_layer = 2

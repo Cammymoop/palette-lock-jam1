@@ -61,6 +61,8 @@ const BOUNCE_NO_TURN = 0.4
 var no_turn := false
 var bounce_countdown := 0.0
 
+@onready var facing_basis: Basis = model.global_basis
+
 const BOUCE_CORRECTION_TIME = 4/60.0
 var need_bounce_correction := false
 var bounce_correction_vector: Vector3 = Vector3.ZERO
@@ -216,8 +218,14 @@ func _process(delta: float) -> void:
 
 	global_position += residual_velocity * delta
 	
-	if zooming:
+	if zooming or Input.is_action_just_pressed("activate_boost"):
 		active_camera.pivot.look_toward = residual_velocity.normalized()
+	
+	if residual_velocity.length_squared() > 0.0:
+		facing_basis = get_global_facing_basis()
+
+func get_global_facing_basis() -> Basis:
+	return Basis.looking_at(residual_velocity, Vector3.UP)
 
 func apply_bounce_correction(amt: float) -> void:
 	amt = minf(amt, 1 - bounce_correction_applied)
