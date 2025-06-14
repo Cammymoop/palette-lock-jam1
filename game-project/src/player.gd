@@ -68,6 +68,11 @@ var need_bounce_correction := false
 var bounce_correction_vector: Vector3 = Vector3.ZERO
 var bounce_correction_applied: float = 0
 
+@onready var terrain_type_checker: Node3D = $TerrainTypeChecker
+@onready var terrain_type_indicator: MeshInstance3D = find_child("TerrainTypeIndicator")
+
+var last_terrain_type := -1
+
 func _process(delta: float) -> void:
 	if need_bounce_correction:
 		apply_bounce_correction(delta / BOUCE_CORRECTION_TIME)
@@ -217,6 +222,14 @@ func _process(delta: float) -> void:
 	$Model.rotation.y = lerp_angle($Model.rotation.y, atan2(-facing_direction.x, -facing_direction.z), 6.0 * delta)
 
 	global_position += residual_velocity * delta
+	
+	terrain_type_checker.update()
+	if terrain_type_checker.current_terrain_type != last_terrain_type:
+		last_terrain_type = terrain_type_checker.current_terrain_type
+		print("New terrain type: ", last_terrain_type)
+		
+		if last_terrain_type != -1:
+			terrain_type_indicator.set_is_color1(last_terrain_type == 0)
 	
 	if zooming or Input.is_action_just_pressed("activate_boost"):
 		active_camera.pivot.look_toward = residual_velocity.normalized()

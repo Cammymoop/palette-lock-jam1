@@ -1,7 +1,9 @@
-[gd_scene load_steps=16 format=3 uid="uid://cp2msfbugy0ot"]
+[gd_scene load_steps=20 format=3 uid="uid://cp2msfbugy0ot"]
 
 [ext_resource type="Script" uid="uid://cowyg5oomxiqx" path="res://src/player.gd" id="1_lowyb"]
+[ext_resource type="Script" uid="uid://hew4wqnqsl2f" path="res://src/mesh_alt_color.gd" id="2_bktlc"]
 [ext_resource type="Script" uid="uid://bodlux840q1yp" path="res://src/player_hit_detector.gd" id="2_gmfve"]
+[ext_resource type="Script" uid="uid://c3xwxfg5wmrqs" path="res://src/terrain_type_checker.gd" id="3_ehvfd"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_rc2ur"]
 
@@ -12,6 +14,12 @@ albedo_color = Color(1, 0.878431, 0.494118, 1)
 size = Vector3(1.1, 1.1, 1.1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ehvfd"]
+albedo_color = Color(0.981853, 0.641533, 0.411009, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_bktlc"]
+size = Vector3(0.25, 0.25, 0.25)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_21lrq"]
 albedo_color = Color(0.981853, 0.641533, 0.411009, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_lowyb"]
@@ -66,6 +74,13 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 
 mesh = SubResource("BoxMesh_gmfve")
 skeleton = NodePath("../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_ehvfd")
+
+[node name="TerrainTypeIndicator" type="MeshInstance3D" parent="Model/Tilt"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.620133, -0.276379)
+mesh = SubResource("BoxMesh_bktlc")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_21lrq")
+script = ExtResource("2_bktlc")
 
 [node name="Boost" type="Node3D" parent="Model/Tilt"]
 transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0, 1.72743)
@@ -167,5 +182,8 @@ script = ExtResource("2_gmfve")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="HitDetector"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0324707, 0.272095)
 shape = SubResource("BoxShape3D_lowyb")
+
+[node name="TerrainTypeChecker" type="Node3D" parent="."]
+script = ExtResource("3_ehvfd")
 
 [connection signal="area_entered" from="HitDetector" to="HitDetector" method="_on_area_entered"]
