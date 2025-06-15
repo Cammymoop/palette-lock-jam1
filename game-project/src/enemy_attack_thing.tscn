@@ -23,9 +23,10 @@ emission = Color(1, 0.654902, 0.647059, 1)
 script = ExtResource("1_8uvm5")
 spinning = false
 spin_speed = 6.3
-attack_speed = 18.0
+charge_scale_max = 1.3
+max_distance = 30.0
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="ColoredPart" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00534701, 0)
 mesh = SubResource("SphereMesh_8uvm5")
 surface_material_override/0 = SubResource("StandardMaterial3D_wiwg6")

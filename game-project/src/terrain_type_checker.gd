@@ -6,17 +6,17 @@ var edge_parameter_name: String = "edge"
 var noise_tex: NoiseTexture2D = preload("res://assets/first_noise_tex.tres")
 var noise_tex_img: Image
 
+var first_update: bool = true
+
 var current_terrain_type: int = -1 
 
 func _ready() -> void:
 	check_for_terrain_type_source()
 	# Cache an Image version of the texture so we can read pixels every frame
-	print("Noise texture: ", noise_tex)
 	# Obtain an Image from the underlying FastNoiseLite resource.
 	noise_tex_img = noise_tex.noise.get_image(noise_tex.width, noise_tex.height, noise_tex.invert)
 	if noise_tex_img == null:
 		print_debug("[TerrainTypeChecker] FastNoiseLite.get_image() returned null; will sample via direct noise calls instead.")
-	print("Noise texture image: ", noise_tex_img)
 
 func check_for_terrain_type_source() -> void:
 	var possible_sources := get_tree().get_nodes_in_group("TerrainTypeSource")
@@ -64,6 +64,9 @@ func update() -> void:
 			return
 	var sample_at_uv: Vector2 = _get_uv_from_world_position()
 	current_terrain_type = get_effective_terrain_type(sample_at_uv)
+	if first_update:
+		prints("first terrain type update", get_parent().name, "pos", global_position, "terrain type", current_terrain_type)
+	first_update = false
 
 func get_effective_terrain_type(at_uv: Vector2) -> int:
 	var sampled_value: float

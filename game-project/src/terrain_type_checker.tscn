@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://r8lnh8cp2way"]
+
+[ext_resource type="Script" uid="uid://c3xwxfg5wmrqs" path="res://src/terrain_type_checker.gd" id="1_5nxsq"]
+
+[node name="TerrainTypeChecker" type="Node3D"]
+script = ExtResource("1_5nxsq")

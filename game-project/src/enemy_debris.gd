@@ -10,15 +10,22 @@ extends Node3D
 @export var tumble_x: float = 8
 @export var tumble_z: float = 5
 
+@export var is_colored: bool = false
+
 @export var scale_out: bool = false
 @export var scale_out_time: float = 0.5
 @export_exp_easing() var scale_out_curve: float = 2.0
 
 var time_passed := 0.0
 
+var color1: bool = true
 var velocity: Vector3 = Vector3.ZERO
 
 func _ready() -> void:
+	if is_colored:
+		$MeshInstance3D.set_is_color1(color1)
+		$MeshInstance3D/BackFace.set_is_color1(color1)
+
 	velocity = Vector3.UP.rotated(Vector3.RIGHT, randf_range(min_spread, max_spread)) * randf_range(upward_velocity * 0.8, upward_velocity)
 	velocity = velocity.rotated(Vector3.UP, randf_range(0, TAU))
 	

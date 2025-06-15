@@ -1,0 +1,161 @@
+[gd_scene load_steps=9 format=3 uid="uid://vhd7cnxuq6c1"]
+
+[ext_resource type="Script" uid="uid://dy068cf32rht5" path="res://src/short_blast.gd" id="1_lh27r"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_yh5ue"]
+top_radius = 0.2
+bottom_radius = 0.2
+height = 1.0
+radial_segments = 5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lh27r"]
+albedo_color = Color(0, 0, 0, 1)
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+
+[sub_resource type="Animation" id="Animation_0m7dr"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Base:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Base:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Ring:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Ring:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_scy3b"]
+resource_name = "pew"
+length = 0.2
+step = 0.0167
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Base:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0166667, 0.0500001, 0.116666),
+"transitions": PackedFloat32Array(1, 0.406126, 1),
+"update": 0,
+"values": [Vector3(0.40311, 0.40311, 0.525355), Vector3(2.6874, 2.6874, 1.24246), Vector3(0.40311, 0.40311, 4.22435)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Base:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0166667, 0.116666),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Ring:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.0525538),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Ring:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.0147969, 0.0499904),
+"transitions": PackedFloat32Array(0.392292, 1, 1),
+"update": 0,
+"values": [Vector3(1.30438, 1.30438, 2.1645), Vector3(2.72763, 2.72763, 1.49296), Vector3(0.42163, 0.42163, 0.42163)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_scfnu"]
+_data = {
+&"RESET": SubResource("Animation_0m7dr"),
+&"pew": SubResource("Animation_scy3b")
+}
+
+[sub_resource type="TorusMesh" id="TorusMesh_yh5ue"]
+rings = 12
+ring_segments = 4
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yh5ue"]
+albedo_color = Color(0, 0, 0, 1)
+emission_enabled = true
+emission = Color(1, 0.878431, 0.494118, 1)
+
+[node name="Blast" type="Node3D"]
+script = ExtResource("1_lh27r")
+
+[node name="Base" type="Node3D" parent="."]
+visible = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Base"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -0.5)
+mesh = SubResource("CylinderMesh_yh5ue")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_lh27r")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_scfnu")
+}
+
+[node name="Ring" type="Node3D" parent="."]
+visible = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ring"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -0.248598)
+mesh = SubResource("TorusMesh_yh5ue")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_yh5ue")
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

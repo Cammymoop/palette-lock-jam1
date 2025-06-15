@@ -61,6 +61,8 @@ const BOUNCE_NO_TURN = 0.4
 var no_turn := false
 var bounce_countdown := 0.0
 
+var restart_pressed: int = 0
+
 @onready var facing_basis: Basis = model.global_basis
 
 const BOUCE_CORRECTION_TIME = 4/60.0
@@ -71,14 +73,37 @@ var bounce_correction_applied: float = 0
 @onready var terrain_type_checker: Node3D = $TerrainTypeChecker
 @onready var terrain_type_indicator: MeshInstance3D = find_child("TerrainTypeIndicator")
 
+var blast_input_held := false
+
+@export var blast_cooldown_time: float = 0.8
+var blast_cooldown := 0.0
+
+@onready var blast_detector: Area3D = find_child("BlastDetector")
+@onready var blast_visual: Node3D = find_child("BlastVisual")
+@onready var blast_visual_pos: Node3D = find_child("BlastVisualPos")
+
 var last_terrain_type := -1
 
 func _process(delta: float) -> void:
+	if Input.is_action_just_pressed("restart"):
+		restart_pressed += 1
+		$RestartLabel.show()
+		$RestartDoublePressTimeout.start()
+	if restart_pressed >= 2:
+		get_tree().reload_current_scene()
+		return
+
+
 	if need_bounce_correction:
 		apply_bounce_correction(delta / BOUCE_CORRECTION_TIME)
 	
 	if hit_effect_frame:
 		hit_effect_frame = false
+	
+	if blast_cooldown > 0.0:
+		blast_cooldown -= delta
+	elif InputJustPressedRememberer.is_blast_just_pressed():
+		do_blast()
 	
 	var active_camera: Camera3D = get_viewport().get_camera_3d()
 
@@ -209,7 +234,7 @@ func _process(delta: float) -> void:
 	else:
 		residual_velocity = lerp(residual_velocity, Vector3.ZERO, base_stopping_factor * delta)
 	
-	if not zooming and zoom_charge >= 1.0 and Input.is_action_just_pressed("activate_boost"):
+	if not zooming and zoom_charge >= 0.93 and Input.is_action_just_pressed("activate_boost"):
 		activate_zoom()
 	elif zooming and zoom_charge <= 0.0:
 		deactivate_zoom()	
@@ -290,3 +315,28 @@ func set_bounce_correction(new_bounce_correction: Vector3) -> void:
 	need_bounce_correction = true
 	bounce_correction_vector = new_bounce_correction
 	bounce_correction_applied = 0
+
+func do_blast() -> void:
+	blast_visual.show_blast(residual_velocity)
+	blast_visual.global_transform = blast_visual_pos.global_transform
+	
+	var found_explodable_areas := blast_detector.get_overlapping_areas()
+	for explodable_area in found_explodable_areas:
+		var entity: Node3D = explodable_area.get_parent()
+		if not entity or not entity.is_in_group("Explodable"):
+			continue
+
+		if entity.has_method("esplode"):
+			entity.esplode()
+		else:
+			entity.queue_free()
+	
+	blast_cooldown = blast_cooldown_time
+
+
+func _on_restart_double_press_timeout_timeout() -> void:
+	restart_pressed = 0
+	$RestartLabel.hide()
+
+func can_ram() -> bool:
+	return zooming

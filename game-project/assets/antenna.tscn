@@ -5,9 +5,11 @@
 [ext_resource type="Script" uid="uid://hew4wqnqsl2f" path="res://src/mesh_alt_color.gd" id="2_r1twr"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_c1w3u"]
+resource_local_to_scene = true
 size = Vector3(0.06, 0.7, 0.1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_6ptiy"]
+resource_local_to_scene = true
 size = Vector3(0.1, 0.2, 0.14)
 
 [node name="Antenna" type="Node3D"]

@@ -1,8 +1,9 @@
-[gd_scene load_steps=18 format=4 uid="uid://b86lyejv0y128"]
+[gd_scene load_steps=19 format=4 uid="uid://b86lyejv0y128"]
 
 [ext_resource type="Material" uid="uid://caesabm87bx4f" path="res://assets/ocean_mat.tres" id="2_2nij2"]
 [ext_resource type="Shader" uid="uid://ebvj3pj6pu2t" path="res://test_scene.tres" id="2_ia1lp"]
 [ext_resource type="Texture2D" uid="uid://b3x40jtbdyvvr" path="res://assets/pollen8-8x.png" id="2_sasra"]
+[ext_resource type="Script" uid="uid://dg88nwf12n0ka" path="res://src/enemy_set.gd" id="3_vr1i5"]
 [ext_resource type="Material" uid="uid://cwg3nf5h4kuk3" path="res://assets/test_island_mat.tres" id="4_7cbxl"]
 [ext_resource type="Material" uid="uid://tc2nlrog2bs1" path="res://shader/island_mat.tres" id="4_8pr8v"]
 [ext_resource type="PackedScene" uid="uid://cp2msfbugy0ot" path="res://src/player.tscn" id="6_7cbxl"]
@@ -132,11 +133,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.75039, -0.280007)
 zoom_activation_time = 2.2
 
 [node name="EnemySet" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.717, 0, -47.7583)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -77.3828, 0, 93.2278)
+script = ExtResource("3_vr1i5")
+group_respawn = true
+group_respawn_timeout = 2.0
+each_death_resets_timer = false
 
 [node name="Enemy" parent="EnemySet" instance=ExtResource("8_buypi")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.283003, 3, -0.0650647)
-debug_prints = true
 does_revive = true
 
 [node name="Enemy2" parent="EnemySet" instance=ExtResource("8_buypi")]
@@ -149,7 +153,38 @@ does_revive = true
 [node name="Enemy4" parent="EnemySet" instance=ExtResource("8_buypi")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.398302, 3, 16.9499)
 
+[node name="EnemySet3" type="Node3D" parent="."]
+transform = Transform3D(0.287611, 0, 0.957747, 0, 1, 0, -0.957747, 0, 0.287611, -18.3538, 0, 93.2278)
+script = ExtResource("3_vr1i5")
+group_respawn = true
+group_respawn_timeout = 2.0
+each_death_resets_timer = false
+
+[node name="Enemy" parent="EnemySet3" instance=ExtResource("8_buypi")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.283003, 3, -0.0650647)
+does_revive = true
+
+[node name="Enemy2" parent="EnemySet3" instance=ExtResource("8_buypi")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -5.5522, 3, 5.27163)
+does_revive = true
+
+[node name="Enemy3" parent="EnemySet3" instance=ExtResource("8_buypi")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -5.2331, 3, 12.7205)
+does_revive = true
+
+[node name="Enemy5" parent="EnemySet3" instance=ExtResource("8_buypi")]
+transform = Transform3D(-2.98023e-08, 0, -1, 0, 1, 0, 1, 0, -2.98023e-08, -3.42049, 3, 18.7566)
+does_revive = true
+
+[node name="Enemy4" parent="EnemySet3" instance=ExtResource("8_buypi")]
+transform = Transform3D(-2.98023e-08, 0, -1, 0, 1, 0, 1, 0, -2.98023e-08, 1.41432, 3, 22.986)
+does_revive = true
+
 [node name="EnemySet2" type="Node3D" parent="."]
+script = ExtResource("3_vr1i5")
+group_respawn = true
+group_respawn_timeout = 4.0
+each_death_resets_timer = false
 
 [node name="Enemy5" parent="EnemySet2" instance=ExtResource("8_buypi")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -47.0192, 3, -7.00355e-07)

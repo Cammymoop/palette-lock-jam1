@@ -1,9 +1,10 @@
-[gd_scene load_steps=17 format=3 uid="uid://dr7fjj8pe2x11"]
+[gd_scene load_steps=19 format=3 uid="uid://dr7fjj8pe2x11"]
 
 [ext_resource type="Script" uid="uid://31dfhshj2gk2" path="res://src/test_enemy.gd" id="1_7k104"]
 [ext_resource type="Material" uid="uid://bxh27c8xrtcyc" path="res://assets/enemy_ma.tres" id="2_u7g3q"]
 [ext_resource type="Script" uid="uid://hew4wqnqsl2f" path="res://src/mesh_alt_color.gd" id="3_c1w3u"]
 [ext_resource type="PackedScene" uid="uid://c4sugeomb76ty" path="res://assets/antenna.tscn" id="4_liqmj"]
+[ext_resource type="PackedScene" uid="uid://r8lnh8cp2way" path="res://src/terrain_type_checker.tscn" id="5_a17ok"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_7xaro"]
 
@@ -60,7 +61,13 @@ height = 2.2
 [sub_resource type="SphereShape3D" id="SphereShape3D_7xaro"]
 radius = 1.30405
 
-[node name="Enemy" type="Node3D" groups=["Explodable"]]
+[sub_resource type="SphereMesh" id="SphereMesh_a17ok"]
+radius = 0.1
+height = 0.2
+radial_segments = 8
+rings = 4
+
+[node name="Enemy" type="Node3D" groups=["Explodable", "Respawnable"]]
 script = ExtResource("1_7k104")
 eye_other_color = Color(0.447059, 0.862745, 0.733333, 1)
 
@@ -120,7 +127,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.38447, 0.170408)
 [node name="Hurtbox" type="Area3D" parent="."]
 collision_layer = 2
 collision_mask = 0
-monitoring = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox"]
 shape = SubResource("SphereShape3D_7xaro")
+
+[node name="TerrainTypeChecker" parent="." instance=ExtResource("5_a17ok")]
+
+[node name="PlaceHolder" type="MeshInstance3D" parent="."]
+transform = Transform3D(2.81808, 0, 0, 0, 2.81808, 0, 0, 0, 2.81808, 0, 0, 0)
+visible = false
+mesh = SubResource("SphereMesh_a17ok")
+surface_material_override/0 = ExtResource("2_u7g3q")
+script = ExtResource("3_c1w3u")

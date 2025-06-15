@@ -1,6 +1,6 @@
 extends Area3D
 
-@onready var player: Node3D = get_parent()
+@onready var player: Node3D = find_parent("Player")
 
 func _on_area_entered(area: Area3D) -> void:
 	var entity: Node3D = area.get_parent()
@@ -17,7 +17,8 @@ func _on_area_entered(area: Area3D) -> void:
 		var delta_to_ideal: Vector3 = new_perpindicular.dot(relative_center * 0.5) * new_perpindicular.normalized()
 		player.bounced(delta_to_ideal)
 
-		if entity.has_method("esplode"):
-			entity.esplode()
-		else:
-			entity.queue_free()
+		if player.can_ram():
+			if entity.has_method("esplode"):
+				entity.esplode()
+			else:
+				entity.queue_free()
