@@ -251,7 +251,6 @@ func _process(delta: float) -> void:
 	terrain_type_checker.update()
 	if terrain_type_checker.current_terrain_type != last_terrain_type:
 		last_terrain_type = terrain_type_checker.current_terrain_type
-		print("New terrain type: ", last_terrain_type)
 		
 		if last_terrain_type != -1:
 			terrain_type_indicator.set_is_color1(last_terrain_type == 0)
@@ -259,10 +258,12 @@ func _process(delta: float) -> void:
 	if zooming or Input.is_action_just_pressed("activate_boost"):
 		active_camera.pivot.look_toward = residual_velocity.normalized()
 	
-	if residual_velocity.length_squared() > 0.0:
+	if residual_velocity.length_squared() > 0.001:
 		facing_basis = get_global_facing_basis()
 
 func get_global_facing_basis() -> Basis:
+	if residual_velocity == Vector3.ZERO:
+		return facing_basis
 	return Basis.looking_at(residual_velocity, Vector3.UP)
 
 func apply_bounce_correction(amt: float) -> void:

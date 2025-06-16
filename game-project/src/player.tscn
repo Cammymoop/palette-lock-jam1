@@ -69,6 +69,7 @@ size = Vector3(12.519, 5.62415, 9.59075)
 
 [node name="Player" type="Node3D"]
 script = ExtResource("1_lowyb")
+zoom_activation_time = 1.6
 zoom_meter_active_color = Color(0.933333, 0.415686, 0.486275, 1)
 zoom_meter_inactive_color = Color(0.670588, 0.337255, 0.458824, 1)
 
@@ -255,4 +256,5 @@ text = "Press again to restart"
 horizontal_alignment = 1
 
 [connection signal="area_entered" from="Model/HitDetector" to="Model/HitDetector" method="_on_area_entered"]
+[connection signal="body_entered" from="Model/HitDetector" to="Model/HitDetector" method="_on_body_entered"]
 [connection signal="timeout" from="RestartDoublePressTimeout" to="." method="_on_restart_double_press_timeout_timeout"]

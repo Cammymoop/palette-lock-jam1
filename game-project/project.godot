@@ -25,6 +25,10 @@ InputJustPressedRememberer="*res://src/static/input_just_pressed_rememberer.gd"
 window/size/viewport_width=1920
 window/size/viewport_height=1080
 
+[filesystem]
+
+import/blender/enabled=false
+
 [global_group]
 
 Player=""
